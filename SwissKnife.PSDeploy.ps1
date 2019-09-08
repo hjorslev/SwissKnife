@@ -5,6 +5,7 @@ if ($env:BHProjectName -and $env:BHProjectName.Count -eq 1 -and $env:BHBuildSyst
             FromSource $env:BHProjectName
             To AppVeyor
             WithOptions @{
+                ApiKey  = $env:NugetApiKey
                 Version = $env:APPVEYOR_BUILD_VERSION
             }
         }
