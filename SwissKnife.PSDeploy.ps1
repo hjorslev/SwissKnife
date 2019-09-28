@@ -4,9 +4,6 @@ if ($env:BHProjectName -and $env:BHProjectName.Count -eq 1 -and $env:BHBuildSyst
         By AppVeyorModule {
             FromSource $env:BHProjectName
             To AppVeyor
-            WithOptions @{
-                Version = $env:APPVEYOR_BUILD_VERSION
-            }
         }
     }
 }
