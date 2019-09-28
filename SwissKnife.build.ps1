@@ -97,7 +97,6 @@ Add-BuildTask DeployPSGallery {
     try {
         nuget pack
         nuget push "SwissKnife.nupkg" -ApiKey $env:NuGetApiKey -Source https://ci.appveyor.com/nuget/hjorslev/api/v2/package
-        nuget push "SwissKnife.nupkg" -Source "GitHub"
         Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published to the PowerShell Gallery." -ForegroundColor Cyan
     } catch {
         # Sad panda; it broke
