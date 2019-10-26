@@ -8,7 +8,7 @@ skip_commits:
     - README.md
 environment:
   NuGetApiKey:
-    secure: wj2COfl0N8NxayKTAEVYXhTk3/XcjrB+ERJbQZquf9F/Nlwn66dOjfN6hakL9xXj
+    secure: OG+sAx+FKUkA9M1sdgdaNT23Vu144PKJu7qK881/Knk=
   GitHubKey:
     secure: N7+lKlNrQkJHEtEtl1CcwG9Q3GRLbH9kGD41NWfb0GbLsH9rHjMoIiCVkDF8jolr
 version: 0.1.0.{build}
