@@ -23,6 +23,8 @@ pull_requests:
 
 # Publish to PowerShell Gallery with this key
 environment:
+  NuGetApiKey:
+    secure: DDeJOSbxbcU8Y01It+2N+IMJRWcEbl/f2rTdB1qS5y4D1PRt4yDmz44Diw/+iURM
   GitHubKey:
     secure: N7+lKlNrQkJHEtEtl1CcwG9Q3GRLbH9kGD41NWfb0GbLsH9rHjMoIiCVkDF8jolr
 

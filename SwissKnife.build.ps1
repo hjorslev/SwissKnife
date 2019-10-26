@@ -95,9 +95,8 @@ Add-BuildTask BuildDocs {
 Add-BuildTask DeployPSGallery {
     # Publish the new version to the PowerShell Gallery
     try {
-        nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/hjorslev/index.json" -UserName hjorslev -Password $env:GitHubKey
-        nuget pack
-        nuget push "SwissKnife.nupkg" -Source "GitHub"
+        Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://nuget.hjorslev.com:443/' -PublishLocation 'https://nuget.hjorslev.com:443/upload'
+        Publish-Module -Name $env:BHProjectName -NuGetApiKey $env:GitHubKey -ErrorAction Stop
         Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published to the PowerShell Gallery." -ForegroundColor Cyan
     } catch {
         # Sad panda; it broke
