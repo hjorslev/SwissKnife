@@ -95,7 +95,7 @@ Add-BuildTask BuildDocs {
 Add-BuildTask DeployPSGallery {
     # Publish the new version to the PowerShell Gallery
     try {
-        Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://nuget.hjorslev.com:443/' -PublishLocation 'https://nuget.hjorslev.com:443/upload'
+        Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://nuget.hjorslev.com/api/v2/' -PublishLocation 'https://nuget.hjorslev.com:443/upload'
         Publish-Module -Path $env:BHModulePath -NuGetApiKey $env:GitHubKey -ErrorAction Stop
         Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published to the PowerShell Gallery." -ForegroundColor Cyan
     } catch {
