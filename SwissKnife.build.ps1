@@ -96,11 +96,11 @@ Add-BuildTask DeployPSGallery {
     # Publish the new version to the PowerShell Gallery
     try {
         Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://nuget.hjorslev.com:443/' -PublishLocation 'https://nuget.hjorslev.com:443/upload'
-        Publish-Module -Name $env:BHProjectName -NuGetApiKey $env:GitHubKey -ErrorAction Stop
+        Publish-Module -Path $env:BHModulePath -NuGetApiKey $env:GitHubKey -ErrorAction Stop
         Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published to the PowerShell Gallery." -ForegroundColor Cyan
     } catch {
         # Sad panda; it broke
-        Write-Warning -Message "Publishing update $($NewVersion) to the PowerShell Gallery failed."
+        Write-Warning -Message "Publishing update $($NewVersion) to failed."
         throw $_
     }
 }
