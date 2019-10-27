@@ -95,8 +95,8 @@ Add-BuildTask BuildDocs {
 Add-BuildTask DeployPSGallery {
     # Publish the new version to the PowerShell Gallery
     try {
-        Register-PSRepository -Name 'GitHub' -SourceLocation 'https://nuget.pkg.github.com/hjorslev/index.json'
-        Publish-Module -Path $env:BHModulePath -NuGetApiKey $env:NuGetApiKey -Repository 'GitHub' -ErrorAction Stop
+        Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://nuget.pkg.github.com/hjorslev/index.json' -PublishLocation 'https://nuget.pkg.github.com/hjorslev/index.json'
+        Publish-Module -Path $env:BHModulePath -NuGetApiKey $env:NuGetApiKey -Repository 'hjorslev' -ErrorAction Stop
         Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published." -ForegroundColor Cyan
     } catch {
         # Sad panda; it broke
