@@ -95,7 +95,9 @@ Add-BuildTask BuildDocs {
 Add-BuildTask DeployPSGallery {
     # Publish the new version to the PowerShell Gallery
     try {
-        Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://nuget.pkg.github.com/hjorslev/index.json' -PublishLocation 'https://nuget.pkg.github.com/hjorslev/index.json'
+        $Password = ConvertTo-SecureString $env:NuGetApiKey -AsPlainText -Force
+        $Credential = New-Object System.Management.Automation.PSCredential ('hjorslev', $Password)
+        Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://nuget.pkg.github.com/hjorslev/index.json' -PublishLocation 'https://nuget.pkg.github.com/hjorslev/index.json' -Credential $Credential
         Publish-Module -Path $env:BHModulePath -NuGetApiKey $env:NuGetApiKey -Repository 'hjorslev' -ErrorAction Stop
         Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published." -ForegroundColor Cyan
     } catch {
