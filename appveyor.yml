@@ -24,3 +24,4 @@ test_script:
 pull_requests:
   do_not_increment_build_number: true
 build: off
+skip_tags: true

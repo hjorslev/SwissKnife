@@ -15,6 +15,5 @@ Initial module version.
   - Get-ObjectMember
   - Get-WAYFMetadata
   - Set-RunasDifferentUser
-  - Show-BalloonTip
   - Test-RunningAsAdmin
   - Use-Module
