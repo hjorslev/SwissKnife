@@ -13,9 +13,3 @@ foreach ($Import in @($Public + $Private)) {
 }
 
 Export-ModuleMember -Function $Public.BaseName
-
-$Modules = 'BurntToast'
-
-foreach ($Module in $Modules) {
-    Use-Module -Name $Module
-}
