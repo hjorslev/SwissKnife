@@ -2,11 +2,11 @@
 function Set-OfficeUpdateChannel {
     <#
     .SYNOPSIS
-    Configure the Update Channel for Microsoft Office.
+    Configure the Update Channel for Microsoft Office 365.
 
     .DESCRIPTION
     Configure the Update Channel for Microsoft Office. Allows the user to choose
-    how often they want to receive updates for Microsoft Office.
+    how often they want to receive updates for Microsoft Office 365.
 
     .PARAMETER Channel
     Set the Update Channel. Learn more about the different values:
@@ -16,7 +16,7 @@ function Set-OfficeUpdateChannel {
     The Force parameter allows the user to skip the "Should Continue" box.
 
     .EXAMPLE
-    An example
+    Set-OfficeUpdateChannel -Channel Monthly
 
     .NOTES
     Author: Frederik Hjorslev Poulsen
