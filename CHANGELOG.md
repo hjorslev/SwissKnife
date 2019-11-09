@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - Set-OfficeUpdateChannel: Configure the Update Channel for Microsoft Office.
 
-## [0.1.0] - 08/09-2019
+## [0.1.0] - 08/11-2019
 
 Initial module version.
 
