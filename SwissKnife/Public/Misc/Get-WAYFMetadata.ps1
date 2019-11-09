@@ -11,6 +11,9 @@
 
     .NOTES
     Author: Frederik Hjorslev Poulsen
+
+    .LINK
+    https://hjorslev.github.io/SwissKnife/Get-WAYFMetadata.html
     #>
 
     [CmdletBinding()]

@@ -20,6 +20,9 @@ function Set-OfficeUpdateChannel {
 
     .NOTES
     Author: Frederik Hjorslev Poulsen
+
+    .LINK
+    https://hjorslev.github.io/SwissKnife/Set-OfficeUpdateChannel.html
     #>
 
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSShouldProcess', '', Justification='Is implemented but not accepted by PSSA.')]
