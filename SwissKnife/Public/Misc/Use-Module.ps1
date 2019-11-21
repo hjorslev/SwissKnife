@@ -1,4 +1,4 @@
-function Use-Module {
+﻿function Use-Module {
     <#
     .SYNOPSIS
     Load a module.
