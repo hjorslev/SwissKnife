@@ -54,6 +54,10 @@
             ModuleVersion = '1.3.1'
             ModuleName    = 'Configuration'
             GUID          = 'e56e5bec-4d97-4dfd-b138-abbaa14464a6'
+        }, @{
+            GUID          = 'f8deaba5-5c23-43aa-a59f-f508e7369a30'
+            ModuleName    = 'PSScriptTools'
+            ModuleVersion = '2.12.0'
         })
 
     # Assemblies that must be loaded prior to importing this module
