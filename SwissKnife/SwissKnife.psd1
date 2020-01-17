@@ -51,10 +51,6 @@
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules   = @(@{
-            GUID          = 'd60c0004-962d-4dfb-8d28-5707572ffd00'
-            ModuleName    = 'AzureAD'
-            ModuleVersion = '2.0.2.76'
-        }, @{
             ModuleVersion = '1.3.1'
             ModuleName    = 'Configuration'
             GUID          = 'e56e5bec-4d97-4dfd-b138-abbaa14464a6'
