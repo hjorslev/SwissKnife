@@ -50,7 +50,15 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    # RequiredModules = @()
+    RequiredModules   = @(@{
+            GUID          = 'd60c0004-962d-4dfb-8d28-5707572ffd00'
+            ModuleName    = 'AzureAD'
+            ModuleVersion = '2.0.2.76'
+        }, @{
+            ModuleVersion = '1.3.1'
+            ModuleName    = 'Configuration'
+            GUID          = 'e56e5bec-4d97-4dfd-b138-abbaa14464a6'
+        })
 
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
@@ -68,7 +76,7 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = @('Set-RunasDifferentUser','Test-RunningAsAdmin','Use-Module')
+    FunctionsToExport = @('Set-RunasDifferentUser', 'Test-RunningAsAdmin', 'Use-Module')
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = @()
@@ -119,5 +127,3 @@
     # DefaultCommandPrefix = ''
 
 }
-
-

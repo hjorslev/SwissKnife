@@ -9,7 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
-- Set-OfficeUpdateChannel: Configure the Update Channel for Microsoft Office.
+- Convert-ExcelSheetToJson
+  - Converts an Excel sheet from a workbook to JSON.
+- Get-OfficeUpdateChannel
+  - Get the current Office Update Channel for Microsoft Office 365.
+- Set-OfficeUpdateChannel
+  - Configure the Update Channel for Microsoft Office.
+- Add-RequiredModule
+  - Add a module to RequiredModules in a PowerShell manifest. Add-RequiredModule
+uses Find-Module to find the module name, current version and GUID of a module
+and adds it to the RequiredModules section in the PowerShell manifest.
 
 ## [0.1.0] - 08/11-2019
 

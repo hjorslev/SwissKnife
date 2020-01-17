@@ -80,8 +80,8 @@ Add-BuildTask BuildDocs {
         }
 
         Import-Module $env:BHPSModuleManifest -Force -Global
-        New-MarkdownHelp -Module $($env:BHProjectName) -OutputFolder '.\docs\' -Force
-        New-ExternalHelp -Path '.\docs\' -OutputPath ".\en-US\" -Force
+        New-MarkdownHelp -Module $env:BHProjectName -OutputFolder "$($env:BHProjectPath)\docs" -Force
+        New-ExternalHelp -Path "$($env:BHProjectPath)\docs" -OutputPath "$($env:BHModulePath)\en-US\" -Force
         Copy-Item -Path '.\README.md' -Destination 'docs\index.md'
         Copy-Item -Path '.\CHANGELOG.md' -Destination 'docs\CHANGELOG.md'
         Copy-Item -Path '.\CONTRIBUTING.md' -Destination 'docs\CONTRIBUTING.md'
@@ -95,12 +95,11 @@ Add-BuildTask BuildDocs {
 Add-BuildTask DeployPSGallery {
     # Publish the new version to the PowerShell Gallery
     try {
-        #Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://ci.appveyor.com/nuget/hjorslev' -PublishLocation 'https://ci.appveyor.com/nuget/hjorslev' -Credential $Credential
-        #Publish-Module -Path $env:BHModulePath -NuGetApiKey $env:NuGetApiKey -Repository 'hjorslev' -ErrorAction Stop
-        #Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published." -ForegroundColor Cyan
+        Invoke-PSDeploy -Force -ErrorAction Stop
+        Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published to the PowerShell Gallery." -ForegroundColor Cyan
     } catch {
         # Sad panda; it broke
-        #Write-Warning -Message "Publishing update $($NewVersion) to failed."
+        Write-Warning -Message "Publishing update $($NewVersion) to the PowerShell Gallery failed."
         throw $_
     }
 }
@@ -138,7 +137,7 @@ Add-BuildTask PushChangesGitHub {
         git checkout master
         git add --all
         git status
-        git commit -s -m "Update version to $($NewVersion)"
+        git commit -s -m ":rocket: Update version to $($NewVersion)"
         git push origin master
 
         $ErrorActionPreference = 'Stop'
@@ -156,6 +155,7 @@ if ($env:BHBuildSystem -ne 'Unknown' -and $env:BHBranchName -eq 'master' -and $e
 } else {
     Add-BuildTask . Init, Test
     Write-Host -Object "Skipping deployment: To deploy, ensure that...`n"
-    Write-Host -Object "`t* You are in a known build system (Current: $env:BHBuildSystem)`n"
-    Write-Host -Object "`t* You are committing to the master branch (Current: $env:BHBranchName) `n"
+    Write-Host -Object "`t* You are in a known build system (Current: $($env:BHBuildSystem))`n"
+    Write-Host -Object "`t* You are committing to the master branch (Current: $($env:BHBranchName)) `n"
+    Write-Host -Object "`t* Your commit message includes '!deploy' (Current: $($env:BHCommitMessage)) `n"
 }
