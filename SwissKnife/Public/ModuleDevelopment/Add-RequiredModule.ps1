@@ -54,6 +54,6 @@
 
     process {
         $RequiredModules += Find-Module -Name $ModuleName | Select-Object -Property @{ Name = 'ModuleName'; Expression = { $_.Name } }, @{ Name = $VersionType; Expression = { $_.Version } }, @{ Name = 'GUID'; Expression = { $_.AdditionalMetadata.GUID } } | ConvertTo-HashTable
-        Update-Manifest -Path $Path -PropertyName RequiredModules -Value $($RequiredModules | Sort-Object -Property @{Expression = { $_.ModuleName } })
+        Update-Metadata -Path $Path -PropertyName RequiredModules -Value $($RequiredModules | Sort-Object -Property @{Expression = { $_.ModuleName } })
     } # Process
 } # Cmdlet
