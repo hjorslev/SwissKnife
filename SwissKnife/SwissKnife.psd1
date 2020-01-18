@@ -51,9 +51,13 @@
 
     # Modules that must be imported into the global environment prior to importing this module
     RequiredModules   = @(@{
-            ModuleVersion = '1.3.1'
-            ModuleName    = 'Configuration'
             GUID          = 'e56e5bec-4d97-4dfd-b138-abbaa14464a6'
+            ModuleName    = 'Configuration'
+            ModuleVersion = '1.3.1'
+        }, @{
+            GUID          = '60dd4136-feff-401a-ba27-a84458c57ede'
+            ModuleName    = 'ImportExcel'
+            ModuleVersion = '7.0.1'
         }, @{
             GUID          = 'f8deaba5-5c23-43aa-a59f-f508e7369a30'
             ModuleName    = 'PSScriptTools'
