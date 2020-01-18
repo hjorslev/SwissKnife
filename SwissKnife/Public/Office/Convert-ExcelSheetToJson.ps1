@@ -21,9 +21,6 @@ function Convert-ExcelSheetToJson {
     .EXAMPLE
     Get-Item MyExcelWorkbook.xlsx | Convert-ExcelSheetToJson -OutputFileName MyConvertedFile.json -SheetName Sheet2
 
-    .LINK
-    https://flamingkeys.com/convert-excel-sheet-json-powershell
-
     .NOTES
     Author: Chris Brown
 
