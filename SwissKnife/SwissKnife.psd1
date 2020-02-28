@@ -50,7 +50,19 @@
     # ProcessorArchitecture = ''
 
     # Modules that must be imported into the global environment prior to importing this module
-    # RequiredModules = @()
+    RequiredModules   = @(@{
+            GUID          = 'e56e5bec-4d97-4dfd-b138-abbaa14464a6'
+            ModuleName    = 'Configuration'
+            ModuleVersion = '1.3.1'
+        }, @{
+            GUID          = '60dd4136-feff-401a-ba27-a84458c57ede'
+            ModuleName    = 'ImportExcel'
+            ModuleVersion = '7.0.1'
+        }, @{
+            GUID          = 'f8deaba5-5c23-43aa-a59f-f508e7369a30'
+            ModuleName    = 'PSScriptTools'
+            ModuleVersion = '2.12.0'
+        })
 
     # Assemblies that must be loaded prior to importing this module
     # RequiredAssemblies = @()
@@ -68,7 +80,7 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = @('Set-RunasDifferentUser','Test-RunningAsAdmin','Use-Module')
+    FunctionsToExport = @('Add-RequiredModule', 'Get-ObjectMember', 'Get-OfficeUpdateChannel', 'Get-WAYFMetadata', 'Set-OfficeUpdateChannel', 'Set-RunasDifferentUser', 'Test-RunningAsAdmin', 'Use-Module')
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = @()
@@ -119,5 +131,3 @@
     # DefaultCommandPrefix = ''
 
 }
-
-

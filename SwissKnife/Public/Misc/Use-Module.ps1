@@ -1,4 +1,4 @@
-function Use-Module {
+﻿function Use-Module {
     <#
     .SYNOPSIS
     Load a module.
@@ -15,6 +15,9 @@ function Use-Module {
 
     .NOTES
     Author: Frederik Hjorslev Poulsen
+
+    .LINK
+    https://hjorslev.github.io/SwissKnife/Use-Module.html
     #>
 
     [CmdletBinding()]

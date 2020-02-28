@@ -1,4 +1,4 @@
-Set-BuildEnvironment -ErrorAction SilentlyContinue
+﻿Set-BuildEnvironment -ErrorAction SilentlyContinue
 
 # Synopsis: Initializing
 Add-BuildTask Init {
@@ -15,6 +15,7 @@ Add-BuildTask Init {
 Add-BuildTask Test {
     # Invoke Pester to run all of the unit tests, then save the results into XML in order to populate the AppVeyor tests section
     # If any of the tests fail, consider the pipeline failed
+    Import-Module $env:BHPSModuleManifest
     $PesterResults = Invoke-Pester -Path "$($env:BHProjectPath)\Tests" -OutputFormat NUnitXml -OutputFile "$($env:BHProjectPath)\Tests\TestsResults.xml" -PassThru
     if ($PesterResults.FailedCount -gt 0) {
         throw "$($PesterResults.FailedCount) tests failed."
@@ -26,7 +27,7 @@ Add-BuildTask Test {
 }
 
 # Synopsis: Build manifest
-Add-BuildTask BuildManifest {
+Add-BuildTask Manifest {
     # We're going to add 1 to the revision value since a new commit has been merged to Master
     # This means that the major / minor / build values will be consistent across GitHub and the Gallery
     try {
@@ -60,7 +61,9 @@ Add-BuildTask BuildManifest {
         ConvertTo-Yaml -Data $AppVeyor -OutFile "$($env:BHProjectPath)\appveyor.yml" -Force
 
         # Update FunctionsToExport in Manifest.
-        Set-ModuleFunction
+        # Populate FunctionsToExport with BaseNames found in Admin, Mail2ndLine and Public folders.
+        $PublicFuntions = ((Get-ChildItem -Path ".\$($env:BHProjectName)\Public\*.ps1" -Recurse).BaseName) | Sort-Object
+        Set-ModuleFunction -FunctionsToExport $PublicFuntions
         Get-ModuleFunction
 
         # Update copyright notice.
@@ -71,7 +74,7 @@ Add-BuildTask BuildManifest {
 }
 
 # Synopsis: Build docs
-Add-BuildTask BuildDocs {
+Add-BuildTask Docs {
     if ($env:BHBuildSystem -ne 'Unknown' -and $env:BHBranchName -eq 'master' ) {
         # Create new markdown and XML help files.
         Write-Host -Object 'Building new function documentation' -ForegroundColor Yellow
@@ -80,8 +83,8 @@ Add-BuildTask BuildDocs {
         }
 
         Import-Module $env:BHPSModuleManifest -Force -Global
-        New-MarkdownHelp -Module $($env:BHProjectName) -OutputFolder '.\docs\' -Force
-        New-ExternalHelp -Path '.\docs\' -OutputPath ".\en-US\" -Force
+        New-MarkdownHelp -Module $env:BHProjectName -OutputFolder "$($env:BHProjectPath)\docs" -Force
+        New-ExternalHelp -Path "$($env:BHProjectPath)\docs" -OutputPath "$($env:BHModulePath)\en-US\" -Force
         Copy-Item -Path '.\README.md' -Destination 'docs\index.md'
         Copy-Item -Path '.\CHANGELOG.md' -Destination 'docs\CHANGELOG.md'
         Copy-Item -Path '.\CONTRIBUTING.md' -Destination 'docs\CONTRIBUTING.md'
@@ -95,12 +98,11 @@ Add-BuildTask BuildDocs {
 Add-BuildTask DeployPSGallery {
     # Publish the new version to the PowerShell Gallery
     try {
-        #Register-PSRepository -Name 'hjorslev' -SourceLocation 'https://ci.appveyor.com/nuget/hjorslev' -PublishLocation 'https://ci.appveyor.com/nuget/hjorslev' -Credential $Credential
-        #Publish-Module -Path $env:BHModulePath -NuGetApiKey $env:NuGetApiKey -Repository 'hjorslev' -ErrorAction Stop
-        #Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published." -ForegroundColor Cyan
+        Invoke-PSDeploy -Force -ErrorAction Stop
+        Write-Host -Object "$($env:BHProjectName) PowerShell Module version $($NewVersion) published to the PowerShell Gallery." -ForegroundColor Cyan
     } catch {
         # Sad panda; it broke
-        #Write-Warning -Message "Publishing update $($NewVersion) to failed."
+        Write-Warning -Message "Publishing update $($NewVersion) to the PowerShell Gallery failed."
         throw $_
     }
 }
@@ -138,7 +140,7 @@ Add-BuildTask PushChangesGitHub {
         git checkout master
         git add --all
         git status
-        git commit -s -m "Update version to $($NewVersion)"
+        git commit -s -m ":rocket: Update version to $($NewVersion)"
         git push origin master
 
         $ErrorActionPreference = 'Stop'
@@ -152,10 +154,11 @@ Add-BuildTask PushChangesGitHub {
 
 if ($env:BHBuildSystem -ne 'Unknown' -and $env:BHBranchName -eq 'master' -and $env:BHCommitMessage -like "*!deploy*") {
     # Synopsis: Entire build pipeline
-    Add-BuildTask . Init, Test, BuildManifest, BuildDocs, DeployPSGallery, DeployGHRelease, PushChangesGitHub
+    Add-BuildTask . Init, Test, Manifest, Docs, DeployPSGallery, DeployGHRelease, PushChangesGitHub
 } else {
     Add-BuildTask . Init, Test
     Write-Host -Object "Skipping deployment: To deploy, ensure that...`n"
-    Write-Host -Object "`t* You are in a known build system (Current: $env:BHBuildSystem)`n"
-    Write-Host -Object "`t* You are committing to the master branch (Current: $env:BHBranchName) `n"
+    Write-Host -Object "`t* You are in a known build system (Current: $($env:BHBuildSystem))`n"
+    Write-Host -Object "`t* You are committing to the master branch (Current: $($env:BHBranchName)) `n"
+    Write-Host -Object "`t* Your commit message includes '!deploy' (Current: $($env:BHCommitMessage)) `n"
 }

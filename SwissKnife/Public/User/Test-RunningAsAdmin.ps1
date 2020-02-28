@@ -4,7 +4,7 @@
     Test if session is executed as an admin.
 
     .DESCRIPTION
-    Test if session is executed as an admin. Will return af boolean of true/false.
+    Test if session is executed as an admin. Will return a boolean of true/false.
 
     .EXAMPLE
     Test-RunningAsAdmin
@@ -13,9 +13,12 @@
 
     .NOTES
     Author: Frederik Hjorslev Poulsen
+
+    Modified: 09/01-2020
     #>
 
     [CmdletBinding()]
+    [OutputType('System.Boolean')]
     Param ()
 
     process {

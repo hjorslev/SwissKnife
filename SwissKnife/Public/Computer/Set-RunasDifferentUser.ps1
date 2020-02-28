@@ -4,7 +4,8 @@
     Activate the option of running an application as a different user in the start menu in Windows 10.
 
     .DESCRIPTION
-    The run as a different user option is disabled in the start menu in Windows 10. This script add a registry key allowing the user to run an application as a different user from the start menu.
+    The run as a different user option is disabled in the start menu in Windows 10.
+    This script add a registry key allowing the user to run an application as a different user from the start menu.
 
     .PARAMETER Status
     Choose the status of Run as a different user: activate or deactivate.
@@ -15,7 +16,11 @@
     .NOTES
     Author: Frederik Hjorslev Poulsen
 
-    In order for the change to take effect, the computer must be restarted. You'll be prompted to do this after the registry key has been added.
+    In order for the change to take effect, the computer must be restarted.
+    You'll be prompted to do this after the registry key has been added.
+
+    .LINK
+    https://hjorslev.github.io/SwissKnife/Set-RunasDifferentUser.html
     #>
 
     [CmdletBinding(SupportsShouldProcess = $true,
