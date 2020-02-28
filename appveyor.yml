@@ -5,7 +5,12 @@
 skip_commits:
   message: /update action.*|updated readme.*|update readme.*|update changelog.*|update docs.*|update version.*|update appveyor.*/
   files:
+    - .vscode/*
+    - appveyor.yml
+    - CHANGELOG.md
+    - CONTRIBUTING.md
     - README.md
+    - .editorconfig
 environment:
   GitHubKey:
     secure: N7+lKlNrQkJHEtEtl1CcwG9Q3GRLbH9kGD41NWfb0GbLsH9rHjMoIiCVkDF8jolr
