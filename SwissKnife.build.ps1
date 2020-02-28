@@ -27,7 +27,7 @@ Add-BuildTask Test {
 }
 
 # Synopsis: Build manifest
-Add-BuildTask BuildManifest {
+Add-BuildTask Manifest {
     # We're going to add 1 to the revision value since a new commit has been merged to Master
     # This means that the major / minor / build values will be consistent across GitHub and the Gallery
     try {
@@ -61,6 +61,7 @@ Add-BuildTask BuildManifest {
         ConvertTo-Yaml -Data $AppVeyor -OutFile "$($env:BHProjectPath)\appveyor.yml" -Force
 
         # Update FunctionsToExport in Manifest.
+        # Populate FunctionsToExport with BaseNames found in Admin, Mail2ndLine and Public folders.
         $PublicFuntions = ((Get-ChildItem -Path ".\$($env:BHProjectName)\Public\*.ps1" -Recurse).BaseName) | Sort-Object
         Set-ModuleFunction -FunctionsToExport $PublicFuntions
         Get-ModuleFunction
@@ -73,7 +74,7 @@ Add-BuildTask BuildManifest {
 }
 
 # Synopsis: Build docs
-Add-BuildTask BuildDocs {
+Add-BuildTask Docs {
     if ($env:BHBuildSystem -ne 'Unknown' -and $env:BHBranchName -eq 'master' ) {
         # Create new markdown and XML help files.
         Write-Host -Object 'Building new function documentation' -ForegroundColor Yellow
@@ -153,7 +154,7 @@ Add-BuildTask PushChangesGitHub {
 
 if ($env:BHBuildSystem -ne 'Unknown' -and $env:BHBranchName -eq 'master' -and $env:BHCommitMessage -like "*!deploy*") {
     # Synopsis: Entire build pipeline
-    Add-BuildTask . Init, Test, BuildManifest, BuildDocs, DeployPSGallery, DeployGHRelease, PushChangesGitHub
+    Add-BuildTask . Init, Test, Manifest, Docs, DeployPSGallery, DeployGHRelease, PushChangesGitHub
 } else {
     Add-BuildTask . Init, Test
     Write-Host -Object "Skipping deployment: To deploy, ensure that...`n"
